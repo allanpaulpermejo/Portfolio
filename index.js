@@ -1,7 +1,9 @@
 // On GitHub Pages, we don't use 'http' or 'fs' modules. 
 // We just inject the content into the existing HTML shell.
 
-const appContainer = document.getElementById('app');
+function initializeApp() {
+  const appContainer = document.getElementById('app');
+  if (!appContainer) return;
 
 const htmlContent = `
       <style>
@@ -373,21 +375,29 @@ const htmlContent = `
       </div>
 `;
 
-// Inject the content
-appContainer.innerHTML = htmlContent;
+  // Inject the content
+  appContainer.innerHTML = htmlContent;
 
-// Slideshow Logic
-const images = ['hackathoncert.jpg', 'hanapp2.jpg', 'hanapp3.jpg', 'hanapp4.jpg'];
-let currentIndex = 0;
-const imgElement = document.getElementById('hanapp-slideshow');
+  // Slideshow Logic
+  const images = ['hackathoncert.jpg', 'hanapp2.jpg', 'hanapp3.jpg', 'hanapp4.jpg'];
+  let currentIndex = 0;
+  const imgElement = document.getElementById('hanapp-slideshow');
 
-if (imgElement) {
-    setInterval(() => {
-        currentIndex = (currentIndex + 1) % images.length;
-        imgElement.style.opacity = 0.8;
-        setTimeout(() => {
-          imgElement.src = images[currentIndex];
-          imgElement.style.opacity = 1;
-        }, 200);
-    }, 2000);
+  if (imgElement) {
+      setInterval(() => {
+          currentIndex = (currentIndex + 1) % images.length;
+          imgElement.style.opacity = 0.8;
+          setTimeout(() => {
+            imgElement.src = images[currentIndex];
+            imgElement.style.opacity = 1;
+          }, 200);
+      }, 2000);
+  }
+}
+
+// Wait for DOM to be ready, then initialize
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeApp);
+} else {
+  initializeApp();
 }
