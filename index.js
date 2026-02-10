@@ -352,7 +352,7 @@ const htmlContent = `
               <p>Inspiring and managing team dynamics to achieve goals.</p>
             </div>
             <div class="soft-skill-card">
-              <img src="communication.jpg" class="soft-skill-icon-img" alt="Communication">
+              <img src="communication.png" class="soft-skill-icon-img" alt="Communication">
               <h4 style="color: var(--primary);">Communication</h4>
               <p>Clear and effective exchange of technical & creative ideas.</p>
             </div>
