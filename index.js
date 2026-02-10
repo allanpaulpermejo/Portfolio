@@ -1,44 +1,9 @@
-const http = require('node:http');
-const fs = require('fs');
-const path = require('path');
+// On GitHub Pages, we don't use 'http' or 'fs' modules. 
+// We just inject the content into the existing HTML shell.
 
-const hostname = '127.0.0.1';
-const port = 3000;
+const appContainer = document.getElementById('app');
 
-const server = http.createServer((req, res) => {
-
-  // --- IMAGE HANDLING ---
-  if (req.url.match(/\.(jpg|jpeg|png|svg)$/)) {
-    const imgPath = path.join(__dirname, req.url);
-    const fileStream = fs.createReadStream(imgPath);
-    
-    fileStream.on('open', () => {
-      res.setHeader('Content-Type', 'image/jpeg');
-      fileStream.pipe(res);
-    });
-    
-    fileStream.on('error', () => {
-      res.statusCode = 404;
-      res.end('Image not found');
-    });
-    return;
-  }
-
-  // --- HTML PAGE ---
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/html');
-
-  const htmlContent = `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Allan Paul | Portfolio</title>
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-      
+const htmlContent = `
       <style>
         :root {
           --primary: #2c3c7c;
@@ -62,7 +27,6 @@ const server = http.createServer((req, res) => {
           line-height: 1.6;
         }
 
-        /* --- NAVIGATION --- */
         nav {
           position: fixed;
           top: 0;
@@ -106,7 +70,6 @@ const server = http.createServer((req, res) => {
           padding: 120px 20px 60px;
         }
 
-        /* --- HEADER --- */
         header {
           display: flex;
           align-items: center;
@@ -170,7 +133,6 @@ const server = http.createServer((req, res) => {
           display: inline-block;
         }
 
-        /* --- SECTION TITLES --- */
         .section-title {
           font-family: 'Playfair Display', serif;
           font-size: 2.2rem;
@@ -187,7 +149,6 @@ const server = http.createServer((req, res) => {
             flex-grow: 1;
         }
 
-        /* --- PROJECTS & CERTS GRID --- */
         .grid-3 {
           display: grid;
           grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -209,7 +170,6 @@ const server = http.createServer((req, res) => {
         .cert-info h3 { margin: 0 0 5px 0; font-size: 1.1rem; color: var(--primary); }
         .cert-info .date { font-size: 0.8rem; color: var(--accent); font-weight: 600; margin-bottom: 10px; }
 
-        /* --- FEATURED WORK --- */
         .featured-card {
           background: var(--white);
           border-radius: 20px;
@@ -223,7 +183,6 @@ const server = http.createServer((req, res) => {
         .featured-image-box { background: var(--secondary); padding: 20px; display: flex; align-items: center; }
         .badge { background-color: var(--secondary); color: var(--primary); padding: 6px 14px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; margin-right: 8px; }
 
-        /* --- SKILLS & SOFT SKILLS --- */
         .skills-container { background: var(--primary); color: var(--white); padding: 50px; border-radius: 24px; margin-bottom: 60px; }
         .skill-pill { display: inline-block; padding: 10px 20px; margin: 5px; border-radius: 8px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); font-size: 0.9rem; transition: 0.3s; }
         .skill-pill:hover { background: var(--white); color: var(--primary); }
@@ -270,8 +229,6 @@ const server = http.createServer((req, res) => {
           h1 { font-size: 3rem; }
         }
       </style>
-    </head>
-    <body>
 
       <nav>
         <div class="nav-content">
@@ -285,7 +242,6 @@ const server = http.createServer((req, res) => {
       </nav>
 
       <div class="container">
-        
         <header id="profile">
           <div class="hero-text">
             <div class="subtitle">UI/UX Designer & Frontend Developer</div>
@@ -296,17 +252,15 @@ const server = http.createServer((req, res) => {
             </p>
             <a href="mailto:allanpaulpermejo@gmail.com" class="btn">Get in Touch</a>
           </div>
-          
           <div class="hero-image">
             <div class="profile-card">
-              <img src="/profilepic.jpg" class="profile-pic" alt="Allan Paul Permejo">
+              <img src="profilepic.jpg" class="profile-pic" alt="Allan Paul Permejo">
             </div>
           </div>
         </header>
 
         <section id="projects">
           <div class="section-title">Featured Work</div>
-          
           <div class="featured-card">
             <div class="featured-content">
               <span style="color: var(--accent); font-weight: 800; font-size: 0.8rem; text-transform: uppercase;">Mobile App</span>
@@ -321,7 +275,7 @@ const server = http.createServer((req, res) => {
               </p>
             </div>
             <div class="featured-image-box">
-               <img id="hanapp-slideshow" src="/hackathoncert.jpg" style="width: 100%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: opacity 0.5s ease-in-out;" alt="Hanapp project">
+               <img id="hanapp-slideshow" src="hackathoncert.jpg" style="width: 100%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: opacity 0.5s ease-in-out;" alt="Hanapp project">
             </div>
           </div>
 
@@ -371,8 +325,7 @@ const server = http.createServer((req, res) => {
               <div class="cert-info">
                 <p class="date">STI College • 2023</p>
                 <h3>Systems Administration</h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">Master Linux system administration skills, 
-                including system installation, configuration, and troubleshooting.</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Master Linux system administration skills, including installation and troubleshooting.</p>
               </div>
             </div>
           </div>
@@ -417,37 +370,24 @@ const server = http.createServer((req, res) => {
         <footer>
           <p>&copy; 2026 Allan Paul Permejo. All Rights Reserved.</p>
         </footer>
-
       </div>
+`;
 
-      <script>
-        const images = [
-          '/hackathoncert.jpg', // Image 1
-          '/hanapp2.jpg',       // Image 2 
-          '/hanapp3.jpg',       // Image 3
-          '/hanapp4.jpg'        // Image 4
-        ];
-        let currentIndex = 0;
-        const imgElement = document.getElementById('hanapp-slideshow');
+// Inject the content
+appContainer.innerHTML = htmlContent;
 
-        setInterval(() => {
-          currentIndex = (currentIndex + 1) % images.length;
-          // Subtly fade out before changing source
-          imgElement.style.opacity = 0.8;
-          setTimeout(() => {
-            imgElement.src = images[currentIndex];
-            imgElement.style.opacity = 1;
-          }, 200);
-        }, 2000);
-      </script>
+// Slideshow Logic
+const images = ['hackathoncert.jpg', 'hanapp2.jpg', 'hanapp3.jpg', 'hanapp4.jpg'];
+let currentIndex = 0;
+const imgElement = document.getElementById('hanapp-slideshow');
 
-    </body>
-    </html>
-  `;
-
-  res.end(htmlContent);
-});
-
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+if (imgElement) {
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % images.length;
+        imgElement.style.opacity = 0.8;
+        setTimeout(() => {
+          imgElement.src = images[currentIndex];
+          imgElement.style.opacity = 1;
+        }, 200);
+    }, 2000);
+}
