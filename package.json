@@ -1,0 +1,18 @@
+{
+  "homepage": "https://github.com/allanpaulpermejo/Portfolio.",
+  "name": "allan-portfolio-ver-2",
+  "version": "1.0.0",
+  "description": "Allan Paul Permejo's Portfolio",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+  "build": "npm run your-build-script", 
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d build"
+},
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
+  }
+}
